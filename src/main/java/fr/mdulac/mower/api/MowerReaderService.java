@@ -1,6 +1,6 @@
 package fr.mdulac.mower.api;
 
-import fr.mdulac.mower.MowItNowConfiguration;
+import fr.mdulac.mower.app.MowItNowConfiguration;
 import fr.mdulac.mower.exceptions.MowItNowParseException;
 
 /**

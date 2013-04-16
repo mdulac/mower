@@ -2,7 +2,7 @@ package fr.mdulac.mower.api;
 
 import java.io.BufferedReader;
 
-import fr.mdulac.mower.MowItNowConfiguration;
+import fr.mdulac.mower.app.MowItNowConfiguration;
 import fr.mdulac.mower.exceptions.MowItNowParseException;
 
 /**

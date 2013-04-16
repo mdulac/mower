@@ -5,6 +5,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import fr.mdulac.mower.api.Grid;
+import fr.mdulac.mower.api.Movable;
 
 /**
  * 
@@ -12,11 +13,11 @@ import fr.mdulac.mower.api.Grid;
  * @version 1.0
  * 
  *          A field is a user understandable grid (horizontal and vertical size
- *          instead of grid position).
+ *          instead of grid position), in which it is posible to link movables.
  */
 public final class Field extends Grid {
 
-	private final Set<Mower> mowers = new LinkedHashSet<Mower>();
+	private final Set<Movable> mowers = new LinkedHashSet<Movable>();
 
 	/**
 	 * The constructor.
@@ -71,7 +72,7 @@ public final class Field extends Grid {
 	 * @param mower
 	 *            The mower you want to link.
 	 */
-	protected void link(Mower mower) {
+	protected void link(Movable mower) {
 		this.mowers.add(mower);
 	}
 
@@ -81,7 +82,7 @@ public final class Field extends Grid {
 	 * @param mower
 	 *            The mower you want to unlink.
 	 */
-	protected void unlink(Mower mower) {
+	protected void unlink(Movable mower) {
 		this.mowers.remove(mower);
 	}
 
@@ -102,9 +103,9 @@ public final class Field extends Grid {
 	 */
 	public boolean isThereAlreadyAMowerAt(Position position) {
 
-		Iterator<Mower> iterator = mowers.iterator();
+		Iterator<Movable> iterator = mowers.iterator();
 		while (iterator.hasNext()) {
-			Mower next = iterator.next();
+			Movable next = iterator.next();
 			if (next.getPosition().equals(position)) {
 				return true;
 			}

@@ -8,9 +8,9 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import fr.mdulac.mower.MowItNowConfiguration;
 import fr.mdulac.mower.api.MowerReaderService;
 import fr.mdulac.mower.api.MowerParser;
+import fr.mdulac.mower.app.MowItNowConfiguration;
 import fr.mdulac.mower.exceptions.MowItNowParseException;
 
 /**

@@ -1,6 +1,5 @@
 package fr.mdulac.mower.domain;
 
-import fr.mdulac.mower.api.Factory;
 import fr.mdulac.mower.api.Movable;
 
 /**
@@ -119,7 +118,7 @@ public class Mower extends Movable {
 		// Target must be a valid position and it must be free (no other mower
 		// at this location)
 		if (field.contains(target) && !field.isThereAlreadyAMowerAt(target)) {
-			setPosition(Factory.newPosition(target.getX(), target.getY()));
+			setPosition(new Position(target.getX(), target.getY()));
 		}
 	}
 
