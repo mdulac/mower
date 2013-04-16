@@ -20,7 +20,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.main.class>fr.mdulac.mower.MowItNow</java.main.class>
+		<java.main.class>fr.mdulac.mower.app.MowItNow</java.main.class>
 
 		<!-- Dependencies versions -->
 		<maven.versions>[2.2.1, 3.1.0)</maven.versions>
