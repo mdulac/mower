@@ -22,9 +22,12 @@ import fr.mdulac.mower.domain.Position;
 import fr.mdulac.mower.exceptions.MowItNowParseException;
 
 @Test
+// In these tests, we only want to test the Runner, so configurations are
+// mocked.
 public class MowItNowRunnerTest {
 
 	public void test_simple_simulation() throws MowItNowParseException {
+
 		MowItNowConfiguration mockConfiguration = mock(MowItNowConfiguration.class);
 		when(mockConfiguration.getConfiguredField()).thenReturn(newField(6, 6));
 		when(mockConfiguration.getConfiguredMowerCommands()).thenReturn(
@@ -71,6 +74,9 @@ public class MowItNowRunnerTest {
 		// The last mower is the only moving, but can't because of surrounding.
 		// Check that its position does not change, but that its orientation
 		// just move to left.
+		
+		Position startPosition = newPosition(1, 1);
+		
 		MowItNowConfiguration mockConfiguration = mock(MowItNowConfiguration.class);
 		when(mockConfiguration.getConfiguredField()).thenReturn(newField(3, 3));
 		when(mockConfiguration.getConfiguredMowerCommands()).thenReturn(
@@ -83,14 +89,14 @@ public class MowItNowRunnerTest {
 						new MowerCommands(newMower(newPosition(2, 1)), Arrays.asList(Command.LEFT)),
 						new MowerCommands(newMower(newPosition(2, 0)), Arrays.asList(Command.LEFT)),
 						new MowerCommands(newMower(newPosition(1, 0)), Arrays.asList(Command.LEFT)),
-						new MowerCommands(newMower(newPosition(1, 1)), Arrays.asList(Command.FORWARD, Command.FORWARD,
-								Command.FORWARD, Command.LEFT, Command.FORWARD, Command.FORWARD, Command.FORWARD))));
+						new MowerCommands(newMower(startPosition), Arrays.asList(Command.FORWARD, Command.LEFT,
+								Command.FORWARD, Command.LEFT, Command.FORWARD, Command.LEFT, Command.FORWARD))));
 
 		List<Mower> result = MowItNowRunner.INSTANCE.runMowItNow(mockConfiguration);
 
 		Assertions.assertThat(result).hasSize(9);
-		Assertions.assertThat(result.get(8).getPosition()).isEqualTo(new Position(1, 1));
-		Assertions.assertThat(result.get(8).getOrientation()).isEqualTo(Orientation.WEST);
+		Assertions.assertThat(result.get(8).getPosition()).isEqualTo(startPosition);
+		Assertions.assertThat(result.get(8).getOrientation()).isEqualTo(Orientation.EAST);
 	}
 
 	public void test_second_mower_starts_at_the_finish_position_of_first_mower() throws MowItNowParseException {
@@ -109,7 +115,7 @@ public class MowItNowRunnerTest {
 		List<Mower> result = MowItNowRunner.INSTANCE.runMowItNow(mockConfiguration);
 
 		Assertions.assertThat(result).hasSize(1);
-		Assertions.assertThat(result.get(0).getPosition()).isEqualTo(new Position(1, 0));
+		Assertions.assertThat(result.get(0).getPosition()).isEqualTo(newPosition(1, 0));
 		Assertions.assertThat(result.get(0).getOrientation()).isEqualTo(Orientation.SOUTH);
 	}
 
