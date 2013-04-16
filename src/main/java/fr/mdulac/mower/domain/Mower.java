@@ -98,6 +98,11 @@ public class Mower extends Movable {
 	 *            The field you want to link with the mower.
 	 */
 	public void linkTo(Field field) {
+
+		if (field == null) {
+			throw new IllegalArgumentException("Cannot link the mower to a null field.");
+		}
+
 		field.link(this);
 		this.field = field;
 	}
@@ -109,12 +114,21 @@ public class Mower extends Movable {
 	 *            The field you want to unlink from the mower.
 	 */
 	public void unlinkFrom(Field field) {
+
+		if (field == null) {
+			throw new IllegalArgumentException("Cannot unlink the mower from a null field.");
+		}
+
 		field.unlink(this);
 		this.field = null;
 	}
 
 	@Override
 	public void changeMyPositionTo(Position target) {
+
+		if (target == null) {
+			throw new IllegalArgumentException("Target position must not be null.");
+		}
 
 		if (field == null) {
 			throw new IllegalStateException("There is no field attached to the mower.");
@@ -127,13 +141,21 @@ public class Mower extends Movable {
 		} else if (field.isThereAlreadyAMowerAt(target)) {
 			LOGGER.info("Cannot move mower from {} to {} - another mower is here", this.getPosition(), target);
 		} else {
+			Position oldPosition = this.getPosition();
 			LOGGER.info("Mower move from {} to {}", this.getPosition(), target);
 			setPosition(new Position(target.getX(), target.getY()));
+			Position newPosition = this.getPosition();
+			field.updatePosition(oldPosition, newPosition);
 		}
 	}
 
 	@Override
 	public void changeMyOrientationTo(Orientation target) {
+
+		if (target == null) {
+			throw new IllegalArgumentException("Target orientation must not be null.");
+		}
+
 		LOGGER.info("Mower rotate from {} to {}", this.getOrientation(), target);
 		setOrientation(target);
 	}

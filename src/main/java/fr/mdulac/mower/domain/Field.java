@@ -1,7 +1,6 @@
 package fr.mdulac.mower.domain;
 
-import java.util.Iterator;
-import java.util.LinkedHashSet;
+import java.util.HashSet;
 import java.util.Set;
 
 import fr.mdulac.mower.api.Grid;
@@ -17,7 +16,7 @@ import fr.mdulac.mower.api.Movable;
  */
 public final class Field extends Grid {
 
-	private final Set<Movable> mowers = new LinkedHashSet<Movable>();
+	private final Set<Position> linkedMowers = new HashSet<Position>();
 
 	/**
 	 * The constructor.
@@ -73,7 +72,7 @@ public final class Field extends Grid {
 	 *            The mower you want to link.
 	 */
 	protected void link(Movable mower) {
-		this.mowers.add(mower);
+		this.linkedMowers.add(mower.getPosition());
 	}
 
 	/**
@@ -83,14 +82,14 @@ public final class Field extends Grid {
 	 *            The mower you want to unlink.
 	 */
 	protected void unlink(Movable mower) {
-		this.mowers.remove(mower);
+		this.linkedMowers.remove(mower.getPosition());
 	}
 
 	/**
 	 * Unlink all the mowers.
 	 */
 	public void unlinkAllMowers() {
-		this.mowers.clear();
+		this.linkedMowers.clear();
 	}
 
 	/**
@@ -102,16 +101,20 @@ public final class Field extends Grid {
 	 * @return True if there is already a linked mower, false otherwise.
 	 */
 	public boolean isThereAlreadyAMowerAt(Position position) {
+		return linkedMowers.contains(position);
+	}
 
-		Iterator<Movable> iterator = mowers.iterator();
-		while (iterator.hasNext()) {
-			Movable next = iterator.next();
-			if (next.getPosition().equals(position)) {
-				return true;
-			}
-		}
-
-		return false;
+	/**
+	 * This method must be invoke to update the position changing.
+	 * 
+	 * @param oldPosition
+	 *            The position before moving.
+	 * @param newPosition
+	 *            The position after moving.
+	 */
+	public void updatePosition(Position oldPosition, Position newPosition) {
+		linkedMowers.remove(oldPosition);
+		linkedMowers.add(newPosition);
 	}
 
 }
