@@ -21,7 +21,6 @@ public class MowItNowConfigurationTest {
 
 	private static final String REGULAR_CONFIGURATION = "5 5\n1 2 N\nGAGAGAGAA";
 
-	@Test
 	public void test_field_properties_for_a_regular_configuration() throws MowItNowParseException {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(
 				REGULAR_CONFIGURATION.getBytes())));
@@ -31,7 +30,6 @@ public class MowItNowConfigurationTest {
 		Assertions.assertThat(configuredField.getTopRightPosition()).isEqualTo(new Position(5, 5));
 	}
 
-	@Test
 	public void test_mowers_properties_for_a_regular_configuration() throws MowItNowParseException {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(
 				REGULAR_CONFIGURATION.getBytes())));
@@ -44,7 +42,6 @@ public class MowItNowConfigurationTest {
 		Assertions.assertThat(mowerCommands.getMower().getOrientation()).isEqualTo(Orientation.of("N"));
 	}
 
-	@Test
 	public void test_commands_properties_for_a_regular_configuration() throws MowItNowParseException {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(
 				REGULAR_CONFIGURATION.getBytes())));

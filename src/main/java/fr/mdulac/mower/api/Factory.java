@@ -42,7 +42,7 @@ public final class Factory {
 	 * @return The newly created mower.
 	 */
 	public static Mower newMower(Position position) {
-		return newMower(position);
+		return newMower(position, Orientation.NORTH);
 	}
 
 	/**

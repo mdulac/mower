@@ -9,9 +9,6 @@ import org.testng.annotations.Test;
 import fr.mdulac.mower.exceptions.MowItNowParseException;
 import fr.mdulac.mower.impl.RegularMowerParser;
 
-/**
- * File parsing Unit Tests.
- */
 @Test
 public class RegularMowerParserTest {
 
@@ -50,7 +47,6 @@ public class RegularMowerParserTest {
 		new RegularMowerParser().parse(reader);
 	}
 
-	@Test
 	public void test_parse_regular_file() throws MowItNowParseException {
 		String file = "5 5\n1 2 N\nGAGAGAGAA";
 		BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(file.getBytes())));

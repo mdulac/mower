@@ -8,6 +8,7 @@ Dependencies
 * SLF4J + LogBack
 * TestNG
 * FestAsserts
+* Mockito
 
 Compile & Run
 -------------

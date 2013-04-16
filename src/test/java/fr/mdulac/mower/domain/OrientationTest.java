@@ -10,7 +10,6 @@ public class OrientationTest {
 
 	private static final String INCORRECT_VALUE = "A";
 
-	@Test
 	public void test_valid_orientations() {
 
 		Assertions.assertThat(Orientation.values()).containsOnly(Orientation.EAST, Orientation.SOUTH, Orientation.WEST,
@@ -33,7 +32,6 @@ public class OrientationTest {
 		Orientation.of(null);
 	}
 
-	@Test
 	public void test_value_orientations() {
 		Assertions.assertThat(Orientation.of("E").getCode()).isEqualTo("E");
 		Assertions.assertThat(Orientation.of("S").getCode()).isEqualTo("S");

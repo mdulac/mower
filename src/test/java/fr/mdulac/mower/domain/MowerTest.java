@@ -16,7 +16,6 @@ public class MowerTest {
 		new Mower(new Position(0, 0), null);
 	}
 	
-	@Test
 	public void test_mower_has_north_orientation_by_default() {
 		Mower mower = new Mower(new Position(0, 0));
 		Assertions.assertThat(mower.getOrientation()).isEqualTo(Orientation.of("N"));

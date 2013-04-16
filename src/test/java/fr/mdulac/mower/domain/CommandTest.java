@@ -6,7 +6,6 @@ import org.testng.annotations.Test;
 @Test
 public class CommandTest {
 
-	@Test
 	public void test_valid_commands() {
 		Assertions.assertThat(Command.of("A")).isEqualTo(Command.FORWARD);
 		Assertions.assertThat(Command.of("G")).isEqualTo(Command.LEFT);
@@ -23,7 +22,6 @@ public class CommandTest {
 		Command.of(null);
 	}
 
-	@Test
 	public void test_value_commands() {
 		Assertions.assertThat(Command.of("A").getCode()).isEqualTo("A");
 		Assertions.assertThat(Command.of("G").getCode()).isEqualTo("G");
@@ -38,7 +36,6 @@ public class CommandTest {
 		Command.execute(mower, Command.FORWARD);
 	}
 
-	@Test
 	public void test_execute_one_step_forward_commands_when_mower_is_oriented_to_the_north() {
 		Position startPosition = new Position(2, 2);
 		Position expectedPosition = new Position(2, 3);
@@ -52,7 +49,6 @@ public class CommandTest {
 		Assertions.assertThat(mower.getPosition()).isEqualTo(expectedPosition);
 	}
 
-	@Test
 	public void test_execute_one_step_forward_commands_when_mower_is_oriented_to_the_south() {
 		Position startPosition = new Position(2, 2);
 		Position expectedPosition = new Position(2, 1);
@@ -66,7 +62,6 @@ public class CommandTest {
 		Assertions.assertThat(mower.getPosition()).isEqualTo(expectedPosition);
 	}
 
-	@Test
 	public void test_execute_one_step_forward_commands_when_mower_is_oriented_to_the_east() {
 		Position startPosition = new Position(2, 2);
 		Position expectedPosition = new Position(3, 2);
@@ -80,7 +75,6 @@ public class CommandTest {
 		Assertions.assertThat(mower.getPosition()).isEqualTo(expectedPosition);
 	}
 
-	@Test
 	public void test_execute_one_step_forward_commands_when_mower_is_oriented_to_the_west() {
 		Position startPosition = new Position(2, 2);
 		Position expectedPosition = new Position(1, 2);
@@ -94,7 +88,6 @@ public class CommandTest {
 		Assertions.assertThat(mower.getPosition()).isEqualTo(expectedPosition);
 	}
 
-	@Test
 	public void test_execute_rotation() {
 		Position startPosition = new Position(2, 2);
 		Mower mower = new Mower(startPosition, Orientation.NORTH);
@@ -116,7 +109,6 @@ public class CommandTest {
 		Assertions.assertThat(mower.getOrientation()).isEqualTo(Orientation.NORTH);
 	}
 	
-	@Test
 	public void test_one_step_forward_outside_the_field() {
 		Position startPosition = new Position(0, 0);
 		Field field = new Field(3, 3);
@@ -126,7 +118,6 @@ public class CommandTest {
 		Assertions.assertThat(mower.getPosition()).isEqualTo(startPosition);
 	}
 	
-	@Test
 	public void test_one_step_forward_to_a_non_empty_area() {
 		Field field = new Field(3, 3);
 		Mower moveableMower = new Mower(new Position(0, 0), Orientation.NORTH);

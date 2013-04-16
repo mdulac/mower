@@ -20,7 +20,6 @@ public class FieldTest {
 		Factory.newField(10, 0);
 	}
 
-	@Test
 	public void test_field_contains_positions() {
 		Grid field = Factory.newField(2, 3);
 		Assertions.assertThat(field.contains(new Position(0, 0))).isTrue();
@@ -31,7 +30,6 @@ public class FieldTest {
 		Assertions.assertThat(field.contains(new Position(1, 2))).isTrue();
 	}
 
-	@Test
 	public void test_field_does_not_contain_position() {
 		Grid field = Factory.newField(2, 3);
 		Assertions.assertThat(field.contains(new Position(2, 3))).isFalse();
