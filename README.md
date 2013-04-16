@@ -12,6 +12,8 @@ Dependencies
 Compile & Run
 -------------
 
+    git clone https://github.com/mdulac/mower.git
+    cd mower
     mvn clean package
     java -jar target/mowitnow-0.0.1-SNAPSHOT.one-jar.jar src/main/resources/mower.txt
 
