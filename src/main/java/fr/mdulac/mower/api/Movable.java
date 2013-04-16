@@ -65,6 +65,7 @@ public abstract class Movable {
 	 * bounded positions and occupied area).
 	 * 
 	 * @param target
+	 *            The target position.
 	 */
 	public abstract void changeMyPositionTo(Position target);
 
@@ -75,6 +76,7 @@ public abstract class Movable {
 	 * can change its orientation.
 	 * 
 	 * @param target
+	 *            The target orientation.
 	 */
 	public abstract void changeMyOrientationTo(Orientation target);
 
