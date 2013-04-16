@@ -36,6 +36,7 @@ public final class MowItNow {
 
 			List<Mower> result = MowItNowRunner.INSTANCE.runMowItNow(configuration);
 
+			LOGGER.info("Here is the result: ");
 			for (Mower mower : result) {
 				LOGGER.info("{} {} {}", mower.getPosition().getX(), mower.getPosition().getY(), mower.getOrientation()
 						.getCode());

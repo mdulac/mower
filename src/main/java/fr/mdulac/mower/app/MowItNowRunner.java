@@ -3,6 +3,9 @@ package fr.mdulac.mower.app;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import fr.mdulac.mower.app.MowItNowConfiguration.MowerCommands;
 import fr.mdulac.mower.domain.Command;
 import fr.mdulac.mower.domain.Field;
@@ -20,6 +23,8 @@ import fr.mdulac.mower.domain.Mower;
 public enum MowItNowRunner {
 
 	INSTANCE;
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(MowItNowRunner.class);
 
 	/**
 	 * Run the simulation with the configuration passed as a parameter.
@@ -46,9 +51,12 @@ public enum MowItNowRunner {
 				mower.linkTo(field);
 
 				for (Command command : commands) {
+					LOGGER.info("Executing command {}", command);
 					Command.execute(mower, command);
 				}
 
+				LOGGER.info("-------------------------");
+				
 				result.add(mower);
 			}
 

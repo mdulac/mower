@@ -1,5 +1,8 @@
 package fr.mdulac.mower.domain;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import fr.mdulac.mower.api.Movable;
 
 /**
@@ -11,6 +14,8 @@ import fr.mdulac.mower.api.Movable;
  *          a position and an orientation.
  */
 public class Mower extends Movable {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(Mower.class);
 
 	/**
 	 * The constructor.
@@ -117,13 +122,19 @@ public class Mower extends Movable {
 
 		// Target must be a valid position and it must be free (no other mower
 		// at this location)
-		if (field.contains(target) && !field.isThereAlreadyAMowerAt(target)) {
+		if (!field.contains(target)) {
+			LOGGER.info("Cannot move mower from {} to {} - outside the fied", this.getPosition(), target);
+		} else if (field.isThereAlreadyAMowerAt(target)) {
+			LOGGER.info("Cannot move mower from {} to {} - another mower is here", this.getPosition(), target);
+		} else {
+			LOGGER.info("Mower move from {} to {}", this.getPosition(), target);
 			setPosition(new Position(target.getX(), target.getY()));
 		}
 	}
 
 	@Override
 	public void changeMyOrientationTo(Orientation target) {
+		LOGGER.info("Mower rotate from {} to {}", this.getOrientation(), target);
 		setOrientation(target);
 	}
 
