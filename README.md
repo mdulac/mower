@@ -13,8 +13,7 @@ Compile & Run
 -------------
 
     mvn clean package
-    cd target
-    java -jar mowitnow-0.0.1-SNAPSHOT.one-jar.jar src/main/resources/mower.txt
+    java -jar target/mowitnow-0.0.1-SNAPSHOT.one-jar.jar src/main/resources/mower.txt
 
 Latest Sonar Statistics
 -----------------------
