@@ -50,6 +50,8 @@ public enum MowItNowRunner {
 				List<Command> commands = mowerCommands.getCommands();
 				mower.linkTo(field);
 
+				LOGGER.info("Putting a mower at position {} and orientated to {}", mower.getPosition(), mower.getOrientation());
+				
 				for (Command command : commands) {
 					LOGGER.info("Executing command {}", command);
 					Command.execute(mower, command);
