@@ -1,9 +1,8 @@
 package fr.mdulac.mower.domain;
 
-import org.fest.assertions.Assertions;
-import org.testng.annotations.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
-import fr.mdulac.mower.domain.Orientation;
+import org.testng.annotations.Test;
 
 @Test
 public class OrientationTest {
@@ -12,13 +11,13 @@ public class OrientationTest {
 
 	public void test_valid_orientations() {
 
-		Assertions.assertThat(Orientation.values()).containsOnly(Orientation.EAST, Orientation.SOUTH, Orientation.WEST,
+		assertThat(Orientation.values()).containsOnly(Orientation.EAST, Orientation.SOUTH, Orientation.WEST,
 				Orientation.NORTH);
 
-		Assertions.assertThat(Orientation.of("E")).isEqualTo(Orientation.EAST);
-		Assertions.assertThat(Orientation.of("S")).isEqualTo(Orientation.SOUTH);
-		Assertions.assertThat(Orientation.of("W")).isEqualTo(Orientation.WEST);
-		Assertions.assertThat(Orientation.of("N")).isEqualTo(Orientation.NORTH);
+		assertThat(Orientation.of("E")).isEqualTo(Orientation.EAST);
+		assertThat(Orientation.of("S")).isEqualTo(Orientation.SOUTH);
+		assertThat(Orientation.of("W")).isEqualTo(Orientation.WEST);
+		assertThat(Orientation.of("N")).isEqualTo(Orientation.NORTH);
 	}
 
 	@Test(expectedExceptions = IllegalArgumentException.class, expectedExceptionsMessageRegExp = INCORRECT_VALUE
@@ -33,9 +32,9 @@ public class OrientationTest {
 	}
 
 	public void test_value_orientations() {
-		Assertions.assertThat(Orientation.of("E").getCode()).isEqualTo("E");
-		Assertions.assertThat(Orientation.of("S").getCode()).isEqualTo("S");
-		Assertions.assertThat(Orientation.of("W").getCode()).isEqualTo("W");
-		Assertions.assertThat(Orientation.of("N").getCode()).isEqualTo("N");
+		assertThat(Orientation.of("E").getCode()).isEqualTo("E");
+		assertThat(Orientation.of("S").getCode()).isEqualTo("S");
+		assertThat(Orientation.of("W").getCode()).isEqualTo("W");
+		assertThat(Orientation.of("N").getCode()).isEqualTo("N");
 	}
 }

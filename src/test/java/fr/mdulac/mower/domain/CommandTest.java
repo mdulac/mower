@@ -1,15 +1,18 @@
 package fr.mdulac.mower.domain;
 
-import org.fest.assertions.Assertions;
+import static org.assertj.core.api.Assertions.assertThat;
+import fr.mdulac.mower.domain.assertj.OrientationAssert;
+import fr.mdulac.mower.domain.assertj.PositionAssert;
+
 import org.testng.annotations.Test;
 
 @Test
 public class CommandTest {
 
 	public void test_valid_commands() {
-		Assertions.assertThat(Command.of("A")).isEqualTo(Command.FORWARD);
-		Assertions.assertThat(Command.of("G")).isEqualTo(Command.LEFT);
-		Assertions.assertThat(Command.of("D")).isEqualTo(Command.RIGHT);
+		assertThat(Command.of("A")).isEqualTo(Command.FORWARD);
+		assertThat(Command.of("G")).isEqualTo(Command.LEFT);
+		assertThat(Command.of("D")).isEqualTo(Command.RIGHT);
 	}
 
 	@Test(expectedExceptions = IllegalArgumentException.class, expectedExceptionsMessageRegExp = "Z is not a valid Command value.")
@@ -23,9 +26,9 @@ public class CommandTest {
 	}
 
 	public void test_value_commands() {
-		Assertions.assertThat(Command.of("A").getCode()).isEqualTo("A");
-		Assertions.assertThat(Command.of("G").getCode()).isEqualTo("G");
-		Assertions.assertThat(Command.of("D").getCode()).isEqualTo("D");
+		assertThat(Command.of("A").getCode()).isEqualTo("A");
+		assertThat(Command.of("G").getCode()).isEqualTo("G");
+		assertThat(Command.of("D").getCode()).isEqualTo("D");
 	}
 
 	@Test(expectedExceptions = IllegalStateException.class, expectedExceptionsMessageRegExp = "There is no field attached to the mower.")
@@ -46,7 +49,7 @@ public class CommandTest {
 
 		Command.execute(mower, Command.FORWARD);
 
-		Assertions.assertThat(mower.getPosition()).isEqualTo(expectedPosition);
+		assertThat(mower.getPosition()).isEqualTo(expectedPosition);
 	}
 
 	public void test_execute_one_step_forward_commands_when_mower_is_oriented_to_the_south() {
@@ -59,7 +62,7 @@ public class CommandTest {
 
 		Command.execute(mower, Command.FORWARD);
 
-		Assertions.assertThat(mower.getPosition()).isEqualTo(expectedPosition);
+		assertThat(mower.getPosition()).isEqualTo(expectedPosition);
 	}
 
 	public void test_execute_one_step_forward_commands_when_mower_is_oriented_to_the_east() {
@@ -72,7 +75,7 @@ public class CommandTest {
 
 		Command.execute(mower, Command.FORWARD);
 
-		Assertions.assertThat(mower.getPosition()).isEqualTo(expectedPosition);
+		assertThat(mower.getPosition()).isEqualTo(expectedPosition);
 	}
 
 	public void test_execute_one_step_forward_commands_when_mower_is_oriented_to_the_west() {
@@ -85,48 +88,57 @@ public class CommandTest {
 
 		Command.execute(mower, Command.FORWARD);
 
-		Assertions.assertThat(mower.getPosition()).isEqualTo(expectedPosition);
+		assertThat(mower.getPosition()).isEqualTo(expectedPosition);
 	}
 
 	public void test_execute_rotation() {
 		Position startPosition = new Position(2, 2);
 		Mower mower = new Mower(startPosition, Orientation.NORTH);
 		Command.execute(mower, Command.LEFT);
-		Assertions.assertThat(mower.getOrientation()).isEqualTo(Orientation.WEST);
+		OrientationAssert.assertThat(mower.getOrientation()).hasCode("W");
+		assertThat(mower.getOrientation()).isEqualTo(Orientation.WEST);
 		Command.execute(mower, Command.LEFT);
-		Assertions.assertThat(mower.getOrientation()).isEqualTo(Orientation.SOUTH);
+		OrientationAssert.assertThat(mower.getOrientation()).hasCode("S");
+		assertThat(mower.getOrientation()).isEqualTo(Orientation.SOUTH);
 		Command.execute(mower, Command.LEFT);
-		Assertions.assertThat(mower.getOrientation()).isEqualTo(Orientation.EAST);
+		OrientationAssert.assertThat(mower.getOrientation()).hasCode("E");
+		assertThat(mower.getOrientation()).isEqualTo(Orientation.EAST);
 		Command.execute(mower, Command.LEFT);
-		Assertions.assertThat(mower.getOrientation()).isEqualTo(Orientation.NORTH);
+		OrientationAssert.assertThat(mower.getOrientation()).hasCode("N");
+		assertThat(mower.getOrientation()).isEqualTo(Orientation.NORTH);
 		Command.execute(mower, Command.RIGHT);
-		Assertions.assertThat(mower.getOrientation()).isEqualTo(Orientation.EAST);
+		OrientationAssert.assertThat(mower.getOrientation()).hasCode("E");
+		assertThat(mower.getOrientation()).isEqualTo(Orientation.EAST);
 		Command.execute(mower, Command.RIGHT);
-		Assertions.assertThat(mower.getOrientation()).isEqualTo(Orientation.SOUTH);
+		OrientationAssert.assertThat(mower.getOrientation()).hasCode("S");
+		assertThat(mower.getOrientation()).isEqualTo(Orientation.SOUTH);
 		Command.execute(mower, Command.RIGHT);
-		Assertions.assertThat(mower.getOrientation()).isEqualTo(Orientation.WEST);
+		OrientationAssert.assertThat(mower.getOrientation()).hasCode("W");
+		assertThat(mower.getOrientation()).isEqualTo(Orientation.WEST);
 		Command.execute(mower, Command.RIGHT);
-		Assertions.assertThat(mower.getOrientation()).isEqualTo(Orientation.NORTH);
+		OrientationAssert.assertThat(mower.getOrientation()).hasCode("N");
+		assertThat(mower.getOrientation()).isEqualTo(Orientation.NORTH);
 	}
-	
+
 	public void test_one_step_forward_outside_the_field() {
 		Position startPosition = new Position(0, 0);
 		Field field = new Field(3, 3);
 		Mower mower = new Mower(startPosition, Orientation.WEST);
 		mower.linkTo(field);
 		Command.execute(mower, Command.FORWARD);
-		Assertions.assertThat(mower.getPosition()).isEqualTo(startPosition);
+		assertThat(mower.getPosition()).isEqualTo(startPosition);
 	}
-	
+
 	public void test_one_step_forward_to_a_non_empty_area() {
 		Field field = new Field(3, 3);
-		Mower moveableMower = new Mower(new Position(0, 0), Orientation.NORTH);
+		Mower movableMower = new Mower(new Position(0, 0), Orientation.NORTH);
 		Mower fixedMower = new Mower(new Position(0, 1), Orientation.WEST);
-		moveableMower.linkTo(field);
+		movableMower.linkTo(field);
 		fixedMower.linkTo(field);
-		
-		Command.execute(moveableMower, Command.FORWARD);
-		Assertions.assertThat(moveableMower.getPosition()).isEqualTo(new Position(0, 0));
+
+		Command.execute(movableMower, Command.FORWARD);
+		PositionAssert.assertThat(movableMower.getPosition()).hasX(0);
+		PositionAssert.assertThat(movableMower.getPosition()).hasY(0);
 	}
 
 }

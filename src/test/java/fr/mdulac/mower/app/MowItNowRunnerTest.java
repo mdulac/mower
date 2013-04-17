@@ -3,17 +3,15 @@ package fr.mdulac.mower.app;
 import static fr.mdulac.mower.api.Factory.newField;
 import static fr.mdulac.mower.api.Factory.newMower;
 import static fr.mdulac.mower.api.Factory.newPosition;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.List;
 
-import org.fest.assertions.Assertions;
 import org.testng.annotations.Test;
 
-import fr.mdulac.mower.app.MowItNowConfiguration;
-import fr.mdulac.mower.app.MowItNowRunner;
 import fr.mdulac.mower.app.MowItNowConfiguration.MowerCommands;
 import fr.mdulac.mower.domain.Command;
 import fr.mdulac.mower.domain.Mower;
@@ -37,9 +35,9 @@ public class MowItNowRunnerTest {
 
 		List<Mower> result = MowItNowRunner.INSTANCE.runMowItNow(mockConfiguration);
 
-		Assertions.assertThat(result).hasSize(1);
-		Assertions.assertThat(result.get(0).getPosition()).isEqualTo(new Position(1, 3));
-		Assertions.assertThat(result.get(0).getOrientation()).isEqualTo(Orientation.NORTH);
+		assertThat(result).hasSize(1);
+		assertThat(result.get(0).getPosition()).isEqualTo(new Position(1, 3));
+		assertThat(result.get(0).getOrientation()).isEqualTo(Orientation.NORTH);
 	}
 
 	public void test_simulation_when_mower_initial_position_is_outside_the_field() throws MowItNowParseException {
@@ -52,7 +50,7 @@ public class MowItNowRunnerTest {
 
 		List<Mower> result = MowItNowRunner.INSTANCE.runMowItNow(mockConfiguration);
 
-		Assertions.assertThat(result).hasSize(0);
+		assertThat(result).hasSize(0);
 	}
 
 	public void test_simulation_when_mower_is_in_front_of_a_border() throws MowItNowParseException {
@@ -65,9 +63,9 @@ public class MowItNowRunnerTest {
 
 		List<Mower> result = MowItNowRunner.INSTANCE.runMowItNow(mockConfiguration);
 
-		Assertions.assertThat(result).hasSize(1);
-		Assertions.assertThat(result.get(0).getPosition()).isEqualTo(new Position(5, 0));
-		Assertions.assertThat(result.get(0).getOrientation()).isEqualTo(Orientation.EAST);
+		assertThat(result).hasSize(1);
+		assertThat(result.get(0).getPosition()).isEqualTo(new Position(5, 0));
+		assertThat(result.get(0).getOrientation()).isEqualTo(Orientation.EAST);
 	}
 
 	public void test_simulation_when_mower_is_surrounded() throws MowItNowParseException {
@@ -94,9 +92,9 @@ public class MowItNowRunnerTest {
 
 		List<Mower> result = MowItNowRunner.INSTANCE.runMowItNow(mockConfiguration);
 
-		Assertions.assertThat(result).hasSize(9);
-		Assertions.assertThat(result.get(8).getPosition()).isEqualTo(startPosition);
-		Assertions.assertThat(result.get(8).getOrientation()).isEqualTo(Orientation.EAST);
+		assertThat(result).hasSize(9);
+		assertThat(result.get(8).getPosition()).isEqualTo(startPosition);
+		assertThat(result.get(8).getOrientation()).isEqualTo(Orientation.EAST);
 	}
 
 	public void test_second_mower_starts_at_the_finish_position_of_first_mower() throws MowItNowParseException {
@@ -114,9 +112,9 @@ public class MowItNowRunnerTest {
 
 		List<Mower> result = MowItNowRunner.INSTANCE.runMowItNow(mockConfiguration);
 
-		Assertions.assertThat(result).hasSize(1);
-		Assertions.assertThat(result.get(0).getPosition()).isEqualTo(newPosition(1, 0));
-		Assertions.assertThat(result.get(0).getOrientation()).isEqualTo(Orientation.SOUTH);
+		assertThat(result).hasSize(1);
+		assertThat(result.get(0).getPosition()).isEqualTo(newPosition(1, 0));
+		assertThat(result.get(0).getOrientation()).isEqualTo(Orientation.SOUTH);
 	}
 
 }
