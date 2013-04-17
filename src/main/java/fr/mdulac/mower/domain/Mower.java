@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import fr.mdulac.mower.api.Movable;
+import fr.mdulac.mower.api.PositionController;
+import fr.mdulac.mower.app.PositionChangedEvent;
 
 /**
  * 
@@ -16,6 +18,7 @@ import fr.mdulac.mower.api.Movable;
 public class Mower extends Movable {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(Mower.class);
+	private PositionController positionController;
 
 	/**
 	 * The constructor.
@@ -26,17 +29,7 @@ public class Mower extends Movable {
 	 *            The initial orientation of the mower.
 	 */
 	public Mower(Position position, Orientation orientation) {
-
 		super(position, orientation);
-
-		if (position == null) {
-			throw new IllegalArgumentException("Position must not be null.");
-		}
-
-		if (orientation == null) {
-			throw new IllegalArgumentException("Orientation must not be null.");
-		}
-
 	}
 
 	/**
@@ -89,38 +82,43 @@ public class Mower extends Movable {
 		return true;
 	}
 
-	private Field field;
-
 	/**
 	 * Create a bidirectional relation between this mower and a field.
 	 * 
-	 * @param field
+	 * @param controller
 	 *            The field you want to link with the mower.
 	 */
-	public void linkTo(Field field) {
+	public void linkTo(PositionController controller) {
 
-		if (field == null) {
+		if (controller == null) {
 			throw new IllegalArgumentException("Cannot link the mower to a null field.");
 		}
 
-		field.link(this);
-		this.field = field;
+		if (this.positionController != null) {
+			throw new IllegalStateException("This mower is already linked. You must unlink it before.");
+		}
+
+		this.positionController = controller;
+		this.positionController.takePlaceAt(this.getPosition());
 	}
 
 	/**
 	 * Remove a bidirectional relation between this mower and a field.
 	 * 
-	 * @param field
+	 * @param controller
 	 *            The field you want to unlink from the mower.
 	 */
-	public void unlinkFrom(Field field) {
+	public void unlinkFrom(PositionController controller) {
 
-		if (field == null) {
+		if (controller == null) {
 			throw new IllegalArgumentException("Cannot unlink the mower from a null field.");
 		}
 
-		field.unlink(this);
-		this.field = null;
+		if (this.positionController == null) {
+			throw new IllegalStateException("This mower is not linked. You must link it before.");
+		}
+
+		this.positionController = null;
 	}
 
 	@Override
@@ -130,22 +128,21 @@ public class Mower extends Movable {
 			throw new IllegalArgumentException("Target position must not be null.");
 		}
 
-		if (field == null) {
+		if (positionController == null) {
 			throw new IllegalStateException("There is no field attached to the mower.");
 		}
 
 		// Target must be a valid position and it must be free (no other mower
 		// at this location)
-		if (!field.contains(target)) {
+		if (!positionController.contains(target)) {
 			LOGGER.info("Cannot move mower from {} to {} - outside the fied", this.getPosition(), target);
-		} else if (field.isThereAlreadyAMowerAt(target)) {
+		} else if (!positionController.isPositionEmpty(target)) {
 			LOGGER.info("Cannot move mower from {} to {} - another mower is here", this.getPosition(), target);
 		} else {
 			Position oldPosition = this.getPosition();
-			LOGGER.info("Mower move from {} to {}", this.getPosition(), target);
 			setPosition(new Position(target.getX(), target.getY()));
 			Position newPosition = this.getPosition();
-			field.updatePosition(oldPosition, newPosition);
+			positionController.positionChanged(new PositionChangedEvent(this, oldPosition, newPosition));
 		}
 	}
 
@@ -158,6 +155,15 @@ public class Mower extends Movable {
 
 		LOGGER.info("Mower rotate from {} to {}", this.getOrientation(), target);
 		setOrientation(target);
+	}
+
+	/**
+	 * Get the position controller.
+	 * 
+	 * @return The position controller.
+	 */
+	public PositionController getPositionController() {
+		return positionController;
 	}
 
 }

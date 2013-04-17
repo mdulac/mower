@@ -6,9 +6,9 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import fr.mdulac.mower.api.PositionController;
 import fr.mdulac.mower.app.MowItNowConfiguration.MowerCommands;
 import fr.mdulac.mower.domain.Command;
-import fr.mdulac.mower.domain.Field;
 import fr.mdulac.mower.domain.Mower;
 
 /**
@@ -36,7 +36,7 @@ public enum MowItNowRunner {
 	public List<Mower> runMowItNow(MowItNowConfiguration configuration) {
 
 		List<Mower> result = new ArrayList<Mower>();
-		Field field = configuration.getConfiguredField();
+		PositionController field = configuration.getConfiguredField();
 		List<MowerCommands> configuredMowerCommands = configuration.getConfiguredMowerCommands();
 
 		for (MowerCommands mowerCommands : configuredMowerCommands) {
@@ -45,7 +45,7 @@ public enum MowItNowRunner {
 
 			// We process the mower only if its initial position is valid, and
 			// if there is no mower yet.
-			if (field.contains(mower.getPosition()) && !field.isThereAlreadyAMowerAt(mower.getPosition())) {
+			if (field.contains(mower.getPosition()) && field.isPositionEmpty(mower.getPosition())) {
 
 				List<Command> commands = mowerCommands.getCommands();
 				mower.linkTo(field);

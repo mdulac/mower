@@ -3,8 +3,12 @@ package fr.mdulac.mower.domain;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import fr.mdulac.mower.api.Grid;
-import fr.mdulac.mower.api.Movable;
+import fr.mdulac.mower.api.PositionController;
+import fr.mdulac.mower.app.PositionChangedEvent;
 
 /**
  * 
@@ -14,9 +18,10 @@ import fr.mdulac.mower.api.Movable;
  *          A field is a user understandable grid (horizontal and vertical size
  *          instead of grid position), in which it is posible to link movables.
  */
-public final class Field extends Grid {
+public final class Field extends Grid implements PositionController {
 
-	private final Set<Position> linkedMowers = new HashSet<Position>();
+	private static final Logger LOGGER = LoggerFactory.getLogger(Field.class);
+	private final Set<Position> nonEmptyPosition = new HashSet<Position>();
 
 	/**
 	 * The constructor.
@@ -28,15 +33,6 @@ public final class Field extends Grid {
 	 */
 	public Field(int horizontalSize, int verticalSize) {
 		super(new Position(horizontalSize - 1, verticalSize - 1));
-
-		if (horizontalSize < 1) {
-			throw new IllegalArgumentException("Horizontal size must be greater than 0.");
-		}
-
-		if (verticalSize < 1) {
-			throw new IllegalArgumentException("Vertical size must be greater than 0.");
-		}
-
 	}
 
 	/**
@@ -59,37 +55,15 @@ public final class Field extends Grid {
 
 	@Override
 	public String toString() {
-		return new StringBuilder("Field with ").append(this.getHorizontalSize()).append(" x ")
-				.append(this.getVerticalSize()).append(" size").toString();
+		return new StringBuilder("Field with ").append(this.getVerticalSize()).append(" x ")
+				.append(this.getHorizontalSize()).append(" size").toString();
 	}
 
-	/**
-	 * Link this field to a mower. This unidirectional relation should not be
-	 * used directly. You must use {@link Mower#linkTo(Field)} to create a
-	 * bidirectional relation.
-	 * 
-	 * @param mower
-	 *            The mower you want to link.
-	 */
-	protected void link(Movable mower) {
-		this.linkedMowers.add(mower.getPosition());
-	}
-
-	/**
-	 * Unlink this field from a mower.
-	 * 
-	 * @param mower
-	 *            The mower you want to unlink.
-	 */
-	protected void unlink(Movable mower) {
-		this.linkedMowers.remove(mower.getPosition());
-	}
-
-	/**
-	 * Unlink all the mowers.
-	 */
-	public void unlinkAllMowers() {
-		this.linkedMowers.clear();
+	@Override
+	public void positionChanged(PositionChangedEvent event) {
+		nonEmptyPosition.remove(event.getOldPosition());
+		nonEmptyPosition.add(event.getNewPosition());
+		LOGGER.info("Mower {} moved from {} to {}", event.getSource(), event.getOldPosition(), event.getNewPosition());
 	}
 
 	/**
@@ -100,21 +74,14 @@ public final class Field extends Grid {
 	 *            The position you want to check.
 	 * @return True if there is already a linked mower, false otherwise.
 	 */
-	public boolean isThereAlreadyAMowerAt(Position position) {
-		return linkedMowers.contains(position);
+	@Override
+	public boolean isPositionEmpty(Position position) {
+		return !nonEmptyPosition.contains(position);
 	}
 
-	/**
-	 * This method must be invoke to update the position changing.
-	 * 
-	 * @param oldPosition
-	 *            The position before moving.
-	 * @param newPosition
-	 *            The position after moving.
-	 */
-	public void updatePosition(Position oldPosition, Position newPosition) {
-		linkedMowers.remove(oldPosition);
-		linkedMowers.add(newPosition);
+	@Override
+	public void takePlaceAt(Position position) {
+		nonEmptyPosition.add(position);
 	}
 
 }

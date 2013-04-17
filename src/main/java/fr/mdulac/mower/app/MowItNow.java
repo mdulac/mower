@@ -20,12 +20,15 @@ import fr.mdulac.mower.exceptions.MowItNowParseException;
  */
 public final class MowItNow {
 
-	private MowItNow() {
-		// Can't use constructor
-	}
+	private static final int ERROR = -1;
+	private static final int PARSE_ERROR = -2;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(MowItNow.class);
 	private static final String BAD_ARGUMENT_MESSAGE = "You must enter an input file.";
+	
+	private MowItNow() {
+		// Can't use constructor
+	}
 
 	public static void main(String[] args) {
 
@@ -44,10 +47,10 @@ public final class MowItNow {
 
 		} catch (MowItNowParseException mpe) {
 			LOGGER.error("Please correct your configuration file: " + mpe.getMessage());
-			System.exit(-1);
+			System.exit(PARSE_ERROR);
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage());
-			System.exit(-1);
+			System.exit(ERROR);
 		}
 
 	}
