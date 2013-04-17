@@ -1,6 +1,8 @@
 Mower
 =====
 
+[![Build Status](https://api.travis-ci.org/mdulac/mower.png?branch=master)](http://travis-ci.org/mdulac/mower)
+
 Dependencies
 ------------
 * JDK 1.6
