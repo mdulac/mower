@@ -47,4 +47,9 @@ Here is an example of a configuration file:
     3 3 E
     AADAADADDA
 
+The program finally prints the final position of each mowers.
 
+Be careful of these three rules:
+* if the initial position of a mower is outside the grid, the mower will not be taken into account in the simulation,
+* if the position after movements is out of the field, mower does not move, retains its orientation, and processes the next command,
+* if the position after movements is on an other mower, mower does not move, retains its orientation, and processes the next command.
