@@ -22,8 +22,8 @@ Compile & Run
 
 Latest Sonar Statistics
 -----------------------
-* 756 lines
-* 93,1 rules compliances
-* 80,3 units tests coverages
+* 784 lines
+* 92,6 rules compliances
+* 80,9 unit tests coverage
 * 0% duplications
-* 100% tests success
+* 100% tests success (55 unit tests)
