@@ -1,7 +1,6 @@
 package fr.mdulac.mower.api;
 
 import fr.mdulac.mower.app.PositionChangedEvent;
-import fr.mdulac.mower.domain.Mower;
 import fr.mdulac.mower.domain.Position;
 
 /**

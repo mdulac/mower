@@ -4,8 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import fr.mdulac.mower.api.Movable;
+import fr.mdulac.mower.api.MovementStrategy;
 import fr.mdulac.mower.api.PositionController;
 import fr.mdulac.mower.app.PositionChangedEvent;
+import fr.mdulac.mower.impl.DefaultMovementStrategy;
 
 /**
  * 
@@ -27,19 +29,23 @@ public class Mower extends Movable {
 	 *            The initial position of the mower.
 	 * @param orientation
 	 *            The initial orientation of the mower.
+	 * @param movementStrategy
+	 *            The movement strategy to apply.
 	 */
-	public Mower(Position position, Orientation orientation) {
-		super(position, orientation);
+	public Mower(Position position, Orientation orientation, MovementStrategy movementStrategy) {
+		super(position, orientation, movementStrategy);
 	}
 
 	/**
-	 * The constructor if you want a mower with a North initial orientation.
+	 * The constructor.
 	 * 
 	 * @param position
 	 *            The initial position of the mower.
+	 * @param orientation
+	 *            The initial orientation of the mower.
 	 */
-	public Mower(Position position) {
-		this(position, Orientation.NORTH);
+	public Mower(Position position, Orientation orientation) {
+		super(position, orientation, new DefaultMovementStrategy());
 	}
 
 	@Override

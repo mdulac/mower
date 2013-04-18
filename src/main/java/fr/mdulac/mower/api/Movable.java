@@ -17,8 +17,19 @@ public abstract class Movable {
 
 	private Position position;
 	private Orientation orientation;
+	private MovementStrategy movementStrategy;
 
-	public Movable(Position position, Orientation orientation) {
+	/**
+	 * The constructor.
+	 * 
+	 * @param position
+	 *            The initial position of the moveable.
+	 * @param orientation
+	 *            The initial orientation of the movable.
+	 * @param movementStrategy
+	 *            The movement strategy to apply.
+	 */
+	public Movable(Position position, Orientation orientation, MovementStrategy movementStrategy) {
 
 		if (position == null) {
 			throw new IllegalArgumentException("Position must not be null.");
@@ -28,8 +39,13 @@ public abstract class Movable {
 			throw new IllegalArgumentException("Orientation must not be null.");
 		}
 
-		this.position = new Position(position.getX(), position.getY());
+		if (movementStrategy == null) {
+			throw new IllegalArgumentException("Movement strategy must not be null.");
+		}
+
+		this.position = position;
 		this.orientation = orientation;
+		this.movementStrategy = movementStrategy;
 	}
 
 	/**
@@ -38,7 +54,7 @@ public abstract class Movable {
 	 * @return The position.
 	 */
 	public Position getPosition() {
-		return new Position(position.getX(), position.getY());
+		return position;
 	}
 
 	protected void setPosition(Position position) {
@@ -87,34 +103,8 @@ public abstract class Movable {
 	 *            The movement you want to apply.
 	 */
 	public void move(Movement movement) {
-
-		Position target;
-
-		switch (movement) {
-		case FORWARD:
-			switch (orientation) {
-			case NORTH:
-				target = new Position(position.getX(), position.getY() + movement.getStep());
-				break;
-			case EAST:
-				target = new Position(position.getX() + movement.getStep(), position.getY());
-				break;
-			case SOUTH:
-				target = new Position(position.getX(), position.getY() - movement.getStep());
-				break;
-			case WEST:
-				target = new Position(position.getX() - movement.getStep(), position.getY());
-				break;
-			default:
-				throw new IllegalArgumentException("Your orientation looks weird: " + orientation);
-			}
-			break;
-		default:
-			throw new IllegalArgumentException("Illegal command for a movement: " + movement);
-		}
-
+		Position target = movementStrategy.move(movement, this.getPosition(), this.getOrientation());
 		changeMyPositionTo(target);
-
 	}
 
 	/**
