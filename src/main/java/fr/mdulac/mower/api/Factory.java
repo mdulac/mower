@@ -5,7 +5,7 @@ import fr.mdulac.mower.domain.Mower;
 import fr.mdulac.mower.domain.Orientation;
 import fr.mdulac.mower.domain.Position;
 import fr.mdulac.mower.impl.MowerFileReaderService;
-import fr.mdulac.mower.impl.RegularMowerParser;
+import fr.mdulac.mower.impl.DefaultMowerParser;
 
 /**
  * 
@@ -64,7 +64,7 @@ public final class Factory {
 	 * @return The newly created parser.
 	 */
 	public static MowerParser newMowerParser() {
-		return new RegularMowerParser();
+		return new DefaultMowerParser();
 	}
 
 	/**

@@ -28,9 +28,9 @@ import fr.mdulac.mower.exceptions.MowItNowParseException;
  *          ones to parse XML files, ...
  * 
  */
-public class RegularMowerParser implements MowerParser {
+public class DefaultMowerParser implements MowerParser {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(RegularMowerParser.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(DefaultMowerParser.class);
 
 	private static final int FIELD_COORDINATES_COUNT = 2;
 	private static final Pattern FIELD_COORDINATES = Pattern.compile("^(\\d+) (\\d+)$");

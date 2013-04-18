@@ -3,7 +3,7 @@ package fr.mdulac.mower.impl;
 import org.testng.annotations.Test;
 
 import fr.mdulac.mower.impl.MowerFileReaderService;
-import fr.mdulac.mower.impl.RegularMowerParser;
+import fr.mdulac.mower.impl.DefaultMowerParser;
 
 @Test
 public class MowerFileReaderServiceTest {
@@ -13,7 +13,7 @@ public class MowerFileReaderServiceTest {
 
 	@Test(expectedExceptions = IllegalArgumentException.class, expectedExceptionsMessageRegExp = "Filename argument must not be null.")
 	public void test_exception_when_filename_is_null() {
-		new MowerFileReaderService(null, new RegularMowerParser());
+		new MowerFileReaderService(null, new DefaultMowerParser());
 	}
 
 	@Test(expectedExceptions = IllegalArgumentException.class, expectedExceptionsMessageRegExp = "Parser argument must not be null.")
@@ -24,7 +24,7 @@ public class MowerFileReaderServiceTest {
 	@Test(expectedExceptions = IllegalArgumentException.class, expectedExceptionsMessageRegExp = "File " + BAD_FILENAME
 			+ " cannot be opened.")
 	public void test_exception_when_file_does_not_exists() {
-		new MowerFileReaderService(BAD_FILENAME, new RegularMowerParser());
+		new MowerFileReaderService(BAD_FILENAME, new DefaultMowerParser());
 	}
 
 }

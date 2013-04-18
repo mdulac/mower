@@ -17,7 +17,7 @@ import fr.mdulac.mower.domain.Orientation;
 import fr.mdulac.mower.domain.assertj.MowerAssert;
 import fr.mdulac.mower.domain.assertj.PositionAssert;
 import fr.mdulac.mower.exceptions.MowItNowParseException;
-import fr.mdulac.mower.impl.RegularMowerParser;
+import fr.mdulac.mower.impl.DefaultMowerParser;
 
 @Test
 public class MowItNowConfigurationTest {
@@ -27,7 +27,7 @@ public class MowItNowConfigurationTest {
 	public void test_field_properties_for_a_regular_configuration() throws MowItNowParseException {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(
 				REGULAR_CONFIGURATION.getBytes())));
-		MowItNowConfiguration configuration = new RegularMowerParser().parse(reader);
+		MowItNowConfiguration configuration = new DefaultMowerParser().parse(reader);
 
 		Grid configuredField = configuration.getConfiguredField();
 		PositionAssert.assertThat(configuredField.getTopRightPosition()).hasX(5);
@@ -37,7 +37,7 @@ public class MowItNowConfigurationTest {
 	public void test_mowers_properties_for_a_regular_configuration() throws MowItNowParseException {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(
 				REGULAR_CONFIGURATION.getBytes())));
-		MowItNowConfiguration configuration = new RegularMowerParser().parse(reader);
+		MowItNowConfiguration configuration = new DefaultMowerParser().parse(reader);
 
 		List<MowerCommands> configuredMowerCommands = configuration.getConfiguredMowerCommands();
 		MowerCommands mowerCommands = configuredMowerCommands.get(0);
@@ -49,7 +49,7 @@ public class MowItNowConfigurationTest {
 	public void test_commands_properties_for_a_regular_configuration() throws MowItNowParseException {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(
 				REGULAR_CONFIGURATION.getBytes())));
-		MowItNowConfiguration configuration = new RegularMowerParser().parse(reader);
+		MowItNowConfiguration configuration = new DefaultMowerParser().parse(reader);
 
 		List<MowerCommands> configuredMowerCommands = configuration.getConfiguredMowerCommands();
 		MowerCommands mowerCommands = configuredMowerCommands.get(0);
