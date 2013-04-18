@@ -21,9 +21,9 @@ public class MowerTest {
 		new Mower(new Position(0, 0), null);
 	}
 
-	public void test_mower_has_north_orientation_by_default() {
-		Mower mower = new Mower(new Position(0, 0));
-		assertThat(mower.getOrientation()).isEqualTo(Orientation.of("N"));
+	@Test(expectedExceptions = IllegalArgumentException.class, expectedExceptionsMessageRegExp = "Movement strategy must not be null.")
+	public void test_mower_cannot_have_null_orientation_strategy() {
+		new Mower(new Position(0, 0), Orientation.of("N"), null);
 	}
 
 	public void test_mower_equality() {
