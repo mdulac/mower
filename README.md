@@ -34,10 +34,10 @@ MowItNow runs simulations of moving mowers.
 
 You simply have to describe the simulation, as a file:
 * the first line must be the coordinates of the top right position (two numbers separated by a space),
-* the second line must be the coordinates of the mower and the orientation (two digits and [NESW] separated by a space)
+* the second line must be the coordinates of the mower and the orientation (two **digits** and [NESW] separated by a space)
 * the third line must be a list of command (A to move forward, G to rotate left, and D to rotate right).
 
-The second and third lines can be repeated, if you want to simulate several mowers.
+The second and third lines can be repeated, if you want to simulate several mowers **sequentially**.
 
 Here is an example of a configuration file:
 
@@ -46,4 +46,5 @@ Here is an example of a configuration file:
     GAGAGAGAA
     3 3 E
     AADAADADDA
+
 
