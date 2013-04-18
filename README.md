@@ -1,6 +1,6 @@
 Mower
 =====
-Travis continuous integration: [![Build Status](https://api.travis-ci.org/mdulac/mower.png?branch=master)](http://travis-ci.org/mdulac/mower)
+[![Build Status](https://api.travis-ci.org/mdulac/mower.png?branch=master)](http://travis-ci.org/mdulac/mower)
 
 Dependencies
 ------------
